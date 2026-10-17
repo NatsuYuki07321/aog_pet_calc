@@ -1,0 +1,110 @@
+{
+  ".nojekyll": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "index.html": {
+    "bytes": 10474,
+    "sha256": "2deb5d51151e31bb0fe696db62b20da24e775a39ec537eea0e370cd95701e1ca"
+  },
+  "style.css": {
+    "bytes": 15152,
+    "sha256": "d588dbe360aae978321c41af20df1592db19c5b5a2bc53d2c62582a45db4a37e"
+  },
+  "theme.js": {
+    "bytes": 866,
+    "sha256": "9042e115ead9fa14aff7df34abe05e321a66ab8754495c1538600f2f1ec16f55"
+  },
+  "app.js": {
+    "bytes": 10855,
+    "sha256": "2dfdb3d807a84ba435dfb33ef221b1f2375e25dac5d39926ee346ed3e9c22808"
+  },
+  "engine.js": {
+    "bytes": 6126,
+    "sha256": "9e83130974bd92c46cb687c0c85234fd514be019a1799d9d968fe4a164a793dd"
+  },
+  "data.js": {
+    "bytes": 2238301,
+    "sha256": "a4c900c537b40f24b6cc3033f65f89efbeba3136a217aa4a8ebab46b911ed33c"
+  },
+  "ocr-core.js": {
+    "bytes": 3595,
+    "sha256": "2c757394b65215247c7828aa1dcf4ac6ddf0c34638be74c9f762c5047d18a46a"
+  },
+  "ocr-ui.js": {
+    "bytes": 7991,
+    "sha256": "002e1fcbef10d7ddf6d1672c434d6d2dcf7dccb14dddbae3c091f372b9929954"
+  },
+  "ocr-totals.js": {
+    "bytes": 4672,
+    "sha256": "ec0d97b318798f4ba1f8768a42d9459399d0f7de92cde40f49cb38064121bfb4"
+  },
+  "digit-model.js": {
+    "bytes": 115367,
+    "sha256": "fc6e562835789a7dbbbf7d245443f8e033ce4f40d47bc1481c6ec2bad9143922"
+  },
+  "README.md": {
+    "bytes": 943,
+    "sha256": "3d0b962195eb1495a45077f25a4b6b243b9ad8d86752a47e237150cbd57b37bb"
+  },
+  "vendor/ocr/CORE-LICENSE.txt": {
+    "bytes": 11358,
+    "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
+  },
+  "vendor/ocr/SHA256.json": {
+    "bytes": 1420,
+    "sha256": "a108b7e84b994ad7942f23fe200d8d315ea86e9a8b103241869d3b67080fb088"
+  },
+  "vendor/ocr/TESSERACT-LICENSE.txt": {
+    "bytes": 11357,
+    "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+  },
+  "vendor/ocr/THIRD-PARTY.md": {
+    "bytes": 889,
+    "sha256": "22819465650167c48b4112d1be48f9d460a35694dc0d9447c215a842c58acf03"
+  },
+  "vendor/ocr/core/tesseract-core-lstm.wasm.js": {
+    "bytes": 3896484,
+    "sha256": "eef5f8b2f8e20e150680b20adaec4a60babafee3adbe8a94583c81fee46e8680"
+  },
+  "vendor/ocr/core/tesseract-core-relaxedsimd-lstm.wasm.js": {
+    "bytes": 3905767,
+    "sha256": "861a536cf9ef8e63cb644d57bab39c388f37f7d6b6f60024b741c5f6b39a59b3"
+  },
+  "vendor/ocr/core/tesseract-core-relaxedsimd.wasm.js": {
+    "bytes": 4697227,
+    "sha256": "843074aa5bad1cc6421b74a86201768ced9f244795e4d81435435a61a40ce535"
+  },
+  "vendor/ocr/core/tesseract-core-simd-lstm.wasm.js": {
+    "bytes": 3899472,
+    "sha256": "c58b46a4c796c0b8afccf77591d5b875b6896b45d402bbce8caa6f5362447b38"
+  },
+  "vendor/ocr/core/tesseract-core-simd.wasm.js": {
+    "bytes": 4690932,
+    "sha256": "6b61ef4e911b5cf57e656bbfe983d6e2b3711a02dd164154ddda064566e8e09d"
+  },
+  "vendor/ocr/core/tesseract-core.wasm.js": {
+    "bytes": 4687944,
+    "sha256": "0bc6ce3e5fbbd0cd89706cf2fd70960e3372f4f01ee24265b26990808aaeb286"
+  },
+  "vendor/ocr/lang/eng.traineddata.gz": {
+    "bytes": 2952873,
+    "sha256": "45b4cb346724ac1774f1c36f42f182b887bcdb28ebe63e6fff90ac41f3fcff91"
+  },
+  "vendor/ocr/tesseract.min.js": {
+    "bytes": 62961,
+    "sha256": "000c27d9cd0def655f77b36c72a389c0ab13793aa31cb4d7aab56d09c0afbc7e"
+  },
+  "vendor/ocr/tesseract.min.js.LICENSE.txt": {
+    "bytes": 149,
+    "sha256": "cdf963ced7d25a0f98901a547647b4d6e2dbe0197fd78c87a059a87b0e542fe2"
+  },
+  "vendor/ocr/worker.min.js": {
+    "bytes": 111307,
+    "sha256": "576b7df7e3393e137e51849357c9adb53fe7ac1bb69bfa06cf3d61520f182c6d"
+  },
+  "vendor/ocr/worker.min.js.LICENSE.txt": {
+    "bytes": 466,
+    "sha256": "45f54171aeaa1d10c0c1a66f374b7bba1f02472b1487fbe892eec04f840002ac"
+  }
+}
