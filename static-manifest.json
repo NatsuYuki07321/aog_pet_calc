@@ -4,8 +4,8 @@
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
   "index.html": {
-    "bytes": 10474,
-    "sha256": "2deb5d51151e31bb0fe696db62b20da24e775a39ec537eea0e370cd95701e1ca"
+    "bytes": 10511,
+    "sha256": "fc4b707feab24af72e13f193bbe66179ce5685a8c71101a6e33f2b8d6c3c8ea7"
   },
   "style.css": {
     "bytes": 15152,
@@ -31,9 +31,13 @@
     "bytes": 3595,
     "sha256": "2c757394b65215247c7828aa1dcf4ac6ddf0c34638be74c9f762c5047d18a46a"
   },
+  "ocr-camera.js": {
+    "bytes": 2532,
+    "sha256": "44b9038326461a5269ef276db1d477d80f5cc706a130577f0ec614d4857b70b2"
+  },
   "ocr-ui.js": {
-    "bytes": 7991,
-    "sha256": "002e1fcbef10d7ddf6d1672c434d6d2dcf7dccb14dddbae3c091f372b9929954"
+    "bytes": 8490,
+    "sha256": "c806321a601d391f373a3ae66b5483d5945cb1e418068f5fbebe64796fe6656b"
   },
   "ocr-totals.js": {
     "bytes": 4672,
@@ -44,8 +48,8 @@
     "sha256": "fc6e562835789a7dbbbf7d245443f8e033ce4f40d47bc1481c6ec2bad9143922"
   },
   "README.md": {
-    "bytes": 943,
-    "sha256": "3d0b962195eb1495a45077f25a4b6b243b9ad8d86752a47e237150cbd57b37bb"
+    "bytes": 1057,
+    "sha256": "bfe924836bc8dbad589084bd20c544a3da8f8776a086570c439b37053377b576"
   },
   "vendor/ocr/CORE-LICENSE.txt": {
     "bytes": 11358,

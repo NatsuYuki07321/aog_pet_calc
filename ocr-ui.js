@@ -1,6 +1,6 @@
 /* Paste/drop/file adapter. Total-value OCR is independent of growth/star prediction. */
 (function(){'use strict';
-const by=id=>document.getElementById(id),D=window.PET_DATA,C=window.PetOCRCore,T=window.PetTotalOCR,M=window.PET_DIGIT_MODEL;
+const by=id=>document.getElementById(id),D=window.PET_DATA,C=window.PetOCRCore,T=window.PetTotalOCR,M=window.PET_DIGIT_MODEL,P=window.PetCameraOCR;
 let generation=0,worker=null,pending=null,previewURL=null,busy=false,attributeTop=0;
 const status=s=>by('ocr-status').textContent=s;
 function zoom(){by('ocr-image-scroll').style.setProperty('--image-zoom',Number(by('ocr-zoom').value)/100);by('ocr-zoom-value').textContent=by('ocr-zoom').value+'%';}
@@ -15,10 +15,24 @@ async function recognize(file){if(busy)cancel();const token=++generation;busy=tr
  if(!file.type.startsWith('image/'))throw Error('請選擇圖片。');if(file.size>20*1024*1024)throw Error('圖片超過20 MB，請裁切面板。');if(previewURL)URL.revokeObjectURL(previewURL);previewURL=URL.createObjectURL(file);by('ocr-preview').src=previewURL;by('ocr-preview').hidden=false;
  const img=new Image();img.src=previewURL;await img.decode();if(token!==generation)return;if(img.naturalWidth*img.naturalHeight>16000000)throw Error('圖片過大，請裁切面板。');const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(img,0,0);const pixels=ctx.getImageData(0,0,c.width,c.height);
  if(C.hasCyanAdditions(pixels)){waiting('這張面板含有淺藍色加成','請先取消召喚或脫下寵物裝備，再貼上新圖片；本次不會填入數字。',false);scrollToBlock('ocr-workbench');status('偵測到淺藍色加成：請先取消召喚，或脫下寵物裝備後重新截圖；不填入這張圖片的數字。');return;}
- const prepared=C.prepare(pixels);attributeTop=Math.max(0,prepared.rows[0].top-prepared.step);const read=T.read(pixels,prepared,C,M);let results=T.review(read);
- // Large camera photos use generic OCR as a second independent reading. Disagreement is left blank.
- if(prepared.step>35){if(location.protocol==='file:')throw Error('拍照圖片的備援辨識需HTTP／HTTPS靜態主機；本機請依 README 啟動靜態預覽伺服器。');const w=await getWorker(token);if(token!==generation)return;const sh=T.sheet(pixels,T.rectangles(pixels,prepared,C)),ret=await w.recognize(canvas(sh),{},{tsv:true});if(token!==generation)return;const lines=C.parseTSV(ret.data.tsv,sh);results=T.review(read,lines);}
- if(token!==generation)return;render(results);status('已直接讀取八項總值；沒有加總白字／綠字，也沒有套用寵物成長表來猜數字。請核對後套用。');
+ let prepared,results,photo=pixels.width>=900;
+ if(!photo){try{prepared=C.prepare(pixels);photo=prepared.step>35;}catch(e){photo=true;}}
+ if(photo){
+  const versions=P.variants(pixels,C,T,M),first=versions[0];attributeTop=Math.max(0,first.prepared.rows[0].top-first.prepared.step)*first.factor;
+  if(location.protocol==='file:')throw Error('拍照辨識需HTTP／HTTPS靜態主機，請直接使用線上網站。');
+  const w=await getWorker(token);if(token!==generation)return;
+  const readings=[];let index=0;
+  for(const v of versions)for(const threshold of [105,115,125]){
+   if(token!==generation)return;status('拍照交叉辨識：'+(++index)+'／'+(versions.length*3)+'。正在核對不同縮圖與亮度門檻…');
+   const sh=T.sheet(v.pixels,v.read.map(r=>r.rect),threshold),ret=await w.recognize(canvas(sh),{},{tsv:true});
+   if(token!==generation)return;readings.push({factor:v.factor,threshold,lines:C.parseTSV(ret.data.tsv,sh)});
+  }
+  results=P.review(versions,readings);
+ }else{
+  attributeTop=Math.max(0,prepared.rows[0].top-prepared.step);
+  results=T.review(T.read(pixels,prepared,C,M));
+ }
+ if(token!==generation)return;render(results);status('已辨識 '+results.filter(r=>r.value!==null).length+'／8 項總值。'+(photo?'拍照圖片經多版本交叉核對；':'')+'請逐項對照原圖，留白處需手動確認。');
  }catch(e){if(token===generation){waiting('需要重新確認圖片',e.message,false);status('辨識未完成：'+e.message);}}finally{if(token===generation){busy=false;by('ocr-cancel').hidden=true;}}}
 function render(rows){by('ocr-rows').replaceChildren();rows.forEach((r,i)=>{const box=document.createElement('div');box.className='ocr-field'+(r.uncertain?' uncertain':'');const label=document.createElement('label');label.textContent=D.attributeLabels[i]+'總值';const input=document.createElement('input');input.type='number';input.min='0';input.step='1';input.required=true;input.value=r.value===null?'':r.value;input.dataset.index=i;input.setAttribute('aria-label','辨識'+D.attributeLabels[i]+'總值');label.append(input);box.append(label);const note=document.createElement('small');note.textContent=r.note;box.append(note);if(r.value===null)for(const v of r.candidates){const b=document.createElement('button');b.type='button';b.textContent='填入候選 '+v;b.onclick=()=>{input.value=v;input.focus();};box.append(b);}by('ocr-rows').append(box);});by('ocr-review').hidden=false;by('ocr-waiting').hidden=true;by('ocr-image-scroll').scrollTop=attributeTop*by('ocr-preview').clientWidth/by('ocr-preview').naturalWidth;scrollToBlock('ocr-workbench');}
 by('ocr-review').addEventListener('submit',e=>{e.preventDefault();const inputs=[...by('ocr-rows').querySelectorAll('input')];if(inputs.length!==8)return;const values=inputs.map(x=>Number(x.value));if(inputs.some(x=>x.value==='')||values.some(x=>!Number.isSafeInteger(x)||x<0)){status('請核對並完整填寫八項總值。');return;}D.attributes.forEach((k,i)=>by('stat-'+k).value=values[i]);by('form').dispatchEvent(new Event('input',{bubbles:true}));status('✓ 已套用八項總值。請在下方填寫實際等級與強化次數。');by('ocr-workbench').hidden=true;by('ocr-reopen').hidden=false;scrollToBlock('input-step');by('level').focus({preventScroll:true});});
